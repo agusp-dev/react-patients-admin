@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Appointment = ({ appointment, onRemove }) => {
 	const { id, pet, owner, date, time, symtoms } = appointment
@@ -16,6 +17,11 @@ const Appointment = ({ appointment, onRemove }) => {
 			</button>
 		</div>
 	)
+}
+
+Appointment.propTypes = {
+	appointment: PropTypes.object.isRequired,
+	onRemove: PropTypes.func.isRequired
 }
 
 export { Appointment }
