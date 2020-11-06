@@ -1,10 +1,23 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Form, Appointment } from './components'
 import './index.css'
 
 function App() {
 
-	const [appointments, addAppointments] = useState([])
+	let initialAppointments = JSON.parse(localStorage.getItem('appointments'))
+	if (!initialAppointments) {
+		initialAppointments = []
+	}
+
+	const [appointments, addAppointments] = useState( initialAppointments )
+
+	useEffect( () => {
+		if (appointments) {
+			localStorage.setItem('appointments', JSON.stringify(appointments))
+		} else {
+			localStorage.setItem('appointments', JSON.stringify([]))
+		}
+	}, [appointments])
 
 	const createAppointment = newAppointment => {
 		addAppointments([
@@ -14,7 +27,9 @@ function App() {
 	}
 
 	const removeAppointment = id => {
-		console.log('removing', id)
+		addAppointments([
+			...appointments.filter(appointment => appointment.id !== id)
+		])
 	}
 
   return (
@@ -27,17 +42,18 @@ function App() {
 							createAppointment={ createAppointment }/>
 					</div>
 					<div className='one-half column'>
-						<h2>Manage your Appointments</h2>
-						{appointments && appointments.map(appointment => (
+						<h2>{appointments.length > 0 
+							? 'Your Appointments' 
+							: 'Add Appointments'}
+						</h2>
+						{appointments.map(appointment => (
 							<Appointment 
 								key={ appointment.id }
 								appointment={ appointment }
 								onRemove={ removeAppointment }/>
 						))}
 					</div>
-
 				</div>
-
 			</div>
 		</Fragment>
   );
