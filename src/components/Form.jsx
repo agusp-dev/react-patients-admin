@@ -40,7 +40,17 @@ const Form = ({ createAppointment }) => {
 		createAppointment( appointment )
 
 		//reset form
-		//todo
+		resetForm()
+	}
+
+	const resetForm = () => {
+		updateAppointment({
+			pet: '',
+			owner: '',
+			date: '',
+			time: '',
+			symtoms: ''
+		})
 	}
 
 	return (

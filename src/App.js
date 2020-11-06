@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { Form } from './components'
+import { Form, Appointment } from './components'
 import './index.css'
 
 function App() {
@@ -13,6 +13,10 @@ function App() {
 		])
 	}
 
+	const removeAppointment = id => {
+		console.log('removing', id)
+	}
+
   return (
     <Fragment>
 			<h1>Patients Manager</h1>
@@ -23,7 +27,13 @@ function App() {
 							createAppointment={ createAppointment }/>
 					</div>
 					<div className='one-half column'>
-						c2
+						<h2>Manage your Appointments</h2>
+						{appointments && appointments.map(appointment => (
+							<Appointment 
+								key={ appointment.id }
+								appointment={ appointment }
+								onRemove={ removeAppointment }/>
+						))}
 					</div>
 
 				</div>
